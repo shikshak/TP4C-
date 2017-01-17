@@ -91,7 +91,7 @@ void CollectionDeLog::RemplirMapTopDix(string nf) {
         if(file.good()){
             while(file >> l){
                 //verification
-                if( (exclusion && l.GetType() !="js") && ( heure != -1 && l.GetHeure() == heure) ) { // j'ai pas mis les extensions -> faire collection
+                if( (exclusion && exclus.find(l.GetType())!=exclus.end()) && ( heure != -1 && l.GetHeure() == heure) ) { // j'ai pas mis les extensions -> faire collection
                     //verification de l'existence de la cible
                     if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
                         myMapTopDix[l.cible] += 1;
