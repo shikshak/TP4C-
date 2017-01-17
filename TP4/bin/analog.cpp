@@ -1,17 +1,13 @@
-// tp2.cpp : Defines the entry point for the console application.
-//
-
-
 #include <string>
-#include "CollectionDeLog.h"
+//#include "CollectionDeLog.h"
 #include <iostream>
 using namespace std;
 
 int main(string commandes)
 {
 	
-	//const char * commande="$./analog [-e -t 45]nom.log";
-	//string commandes("[-e -t 45]nom.log");
+	//const char * commande="$./analog [-e -t -g hhkhkhk.dot]nom.log";
+	//string commandes("[-e -t 25]nom.log");
 	//cout<<commandes<<endl;
 	//cout<<"here"<<endl;
 	
@@ -29,17 +25,21 @@ int main(string commandes)
 			//cout<<"nomdeficher"<<nomdeficher<<endl; 
 			//system("pause");
 			int num=commandes.find("]")-commandes.find("[");
-			string option=commandes.substr(10,num-1);
+			string option=commandes.substr(1,num-1);
 			//cout<<"option"<<option<<endl;
 			//system("pause");
 			/*string suboption1=option.substr(0,2);
             cout<<"suboption1"<<suboption1<<endl;
 			system("pause");
 			*/
+			string nomdegraphe;
 			if(option.find("-g")!=-1)
 			{
+				if(option.find(".dot")==-1){
+				cout<<"the name of the photo mustwnd with'.dot'"<<endl;
+				}
 				int position =option.find(".dot");
-				string nomdegraphe=option.substr(option.find("-g"),position+4); 
+				nomdegraphe=option.substr(option.find("-g"),position+4); 
 				//cout<<"nomdegraphe"<<nomdegraphe<<endl;
 			}
 
@@ -69,50 +69,118 @@ int main(string commandes)
 			}
 			if(option.find("-g")!=-1&&option.find("-t")==-1&&option.find("-e")==-1)
 				{
-				    CollectionDeLog(nomdeficher,'n',-1, 'g', nomdegraphe);
+					if(option.length()==(nomdegraphe.length()+2))
+				    {
+						//CollectionDeLog(nomdeficher,'n',-1, 'g', nomdegraphe);
+					}
+					else
+					{
+						cout<<"wrong options1"<<endl;
+					}
 					//system ("pause");
 					return 0;
 				}
 			    if(option.find("-g")!=-1&&option.find("-t")!=-1&&option.find("-e")!=-1)
 				{
-					CollectionDeLog(nomdeficher, 'e', heure,'g', nomdegraphe);
+					if(option.length()==(nomdegraphe.length()+8))
+				    {
+						//CollectionDeLog(nomdeficher, 'e', heure,'g', nomdegraphe);
+					}
+					else
+					{
+						cout<<"wrong options2"<<endl;
+					}
+					
 					//system ("pause");
 					return 0;
 				}
-				 if(option.find("-g")!=-1&&!option.find("-t")==-1&&option.find("-e")!=-1)
+				 if(option.find("-g")!=-1&&option.find("-t")==-1&&option.find("-e")!=-1)
 				 {
 
-				    CollectionDeLog(nomdeficher,'e',-1, 'g', nomdegraphe);
+					 if(option.length()==(nomdegraphe.length()+4))
+				    {
+						//CollectionDeLog(nomdeficher,'e',-1, 'g', nomdegraphe);
+					}
+					else
+					{
+						cout<<"wrong options3"<<endl;
+					}
+					
+				    
 					//system ("pause");
 					return 0;
 				 }
 				  if(option.find("-g")!=-1&&option.find("-t")!=-1&&option.find("-e")==-1)
 				 {
-				    CollectionDeLog(nomdeficher, 'n',heure, 'g', nomdegraphe);
+					  if(option.length()==(nomdegraphe.length()+6))
+				    {
+						//CollectionDeLog(nomdeficher, 'n',heure, 'g', nomdegraphe);
+					}
+					else
+					{
+						cout<<"wrong options4"<<endl;
+					}
+					
+				    
 					//system ("pause");
 					return 0;
 				 }
 				  if(option.find("-g")==-1&&option.find("-t")!=-1&&option.find("-e")!=-1)
 				 {
-				    CollectionDeLog(nomdeficher, 'e',heure);
-					system ("pause");
+					   if(option.length()==6)
+				    {
+						//CollectionDeLog(nomdeficher, 'e',heure);
+					}
+					else
+					{
+						cout<<"wrong options5"<<endl;
+					}
+					
+				    
+					//system ("pause");
 					return 0;
 				 }
 				  if(option.find("-g")==-1&&option.find("-t")==-1&&option.find("-e")!=-1)
 				 {
-				    CollectionDeLog(nomdeficher, 'e');
+					   if(option.length()==2)
+				    {
+						 //CollectionDeLog(nomdeficher, 'e');
+					}
+					else
+					{
+						cout<<"wrong options6"<<endl;
+					}
+				   
 					//system ("pause");
 					return 0;
 				 }
 				  if(option.find("-g")==-1&&option.find("-t")!=-1&&option.find("-e")==-1)
 				 {
-				    CollectionDeLog(nomdeficher,'n',heure);
+					    if(option.length()==4)
+				    {
+						  //CollectionDeLog(nomdeficher,'n',heure);
+					}
+					else
+					{
+						cout<<"wrong options7"<<endl;
+					}
+				   
 					//system ("pause");
 					return 0;
 				 }
 				    if(option.find("-g")==-1&&option.find("-t")==-1&&option.find("-e")==-1)
 				 {
-				    CollectionDeLog(nomdeficher);
+
+					    if(option.length()==0)
+				    {
+						  //CollectionDeLog(nomdeficher);
+					}
+					else
+					{
+						cout<<"wrong options8"<<endl;
+					}
+				   
+				    
 					//system ("pause");
 					return 0;
 				 }
