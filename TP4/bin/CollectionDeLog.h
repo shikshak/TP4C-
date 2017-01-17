@@ -7,7 +7,6 @@
 #include<map>
 #include <iostream>
 
-#include "cmake-build-debug/Log.h"
 #include "Log.h"
 
 using namespace std;
@@ -50,7 +49,8 @@ public:
     // Contrat :char e='n'
     //
 
-    CollectionDeLog(string nf, char e, char topdix = 'o', string nfGraph = "unnamed.dot"); //nom du fichier, e pour le tri n pour pas de tri, o si top dix n si graph, nom du fichier .dot
+    CollectionDeLog(string nf, char e, char topdix = 'o', string nfGraph = "unnamed.dot");
+    //nom du fichier, e pour le tri n pour pas de tri, o si top dix n si graph, nom du fichier .dot
     CollectionDeLog (string nf, int heure, char topdix = 'o', string nfGraph = "unnamed.dot");
     CollectionDeLog (string nf, char e, int heure, char topdix = 'o', string nfGraph = "unnamed.dot");
 
@@ -60,7 +60,7 @@ public:
     // Contrat :
     //
 
-    void AjouterTopDix(Log & l);
+    static void AjouterTopDix(Log & l);
     void AjouterGraph(Log & l);
     void AjouterTopDixInv(Log & l);
 
@@ -79,7 +79,7 @@ public:
 
 
 
-protected:
+public:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
@@ -87,10 +87,12 @@ protected:
     typedef map <string,int> mapTopDix; //cible, compteur
     static mapTopDix myMapTopDix;
 
-    typedef map <int,string> mapTopDixInv; //compteur, cible
-    static mapTopDixInv myMapTopDixInv;
-
-    typedef map <string,Informations> mapGraph; //cibleref, structure inforamtions
+struct dessin{
+    int compteur;
+    string cible;
+    string referent;
+};
+    typedef map <string,dessin> mapGraph; //cibleref, structure inforamtions
     static  mapGraph myMapGraph;
 
     friend class Log;
