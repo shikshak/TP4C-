@@ -12,7 +12,10 @@
 
 //------------------------------------------------------ Include personnel
 #include <fstream>
+#include <vector>
+#include <algorithm>
 #include "CollectionDeLog.h"
+using namespace std;
 
 ///////////////////////////////////////////////////////////////////  PRIVE
 //------------------------------------------------------------- Constantes
@@ -25,6 +28,10 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
+
+class const_iterator;
+
+class const_iterator;
 
 CollectionDeLog::CollectionDeLog ( ){
 #ifdef MAP
@@ -63,7 +70,7 @@ CollectionDeLog::~CollectionDeLog() {
 }
 
 
-void CollectionDeLog::AjouterTopDix(Log & l) {
+static void CollectionDeLog::AjouterTopDix(Log & l) {
 #ifdef MAP
     cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
 #endif
@@ -75,7 +82,7 @@ void CollectionDeLog::AjouterTopDix(Log & l) {
 
 void CollectionDeLog::AjouterGraph(Log &l) {
 #ifdef MAP
-    cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
+    cout << "Appel de AjouterGraph de <CollectionDeLog>" << endl;
 #endif
 
     if(!l.cible.empty()){
@@ -85,12 +92,13 @@ void CollectionDeLog::AjouterGraph(Log &l) {
 
 void CollectionDeLog::AjouterTopDixInv(Log & l) {
 #ifdef MAP
-    cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
+    cout << "Appel de AjouterTopDixInv de <CollectionDeLog>" << endl;
 #endif
-
+/*
     if(!l.cible.empty()){
         myMapTopDixInv.insert(make_pair(l.cible, 1));
     }
+*/
 }
 
 
@@ -107,7 +115,7 @@ void CollectionDeLog::AjouterTopDix(string nf, char triE) {
         if(file.good()){
             while(file >> l){
                 //verification du triE
-                if(triE = 'n' || (triE = 'e' && (l.Infos.type != "jpg" && l.Infos.type != "js" ))) { // rajouter toutes les extensions du tp
+                if(triE = 'n' || (triE = 'e' && (l.Infos.type != "jpg" && l.Infos.type != "js" && l.Infos.type != "css" ))) { // rajouter toutes les extensions du tp
                     //verification de l'existence de la cible
                     if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
                         myMapTopDix[l.cible] += 1;
@@ -131,7 +139,7 @@ void CollectionDeLog::AjouterTopDix(string nf, int heure) {
         if(file.good()){
             while(file >> l){
                 //verification du triE
-                if(l.Infos.heure == heure) {
+                if(l.getHeure() == heure) {
                     //verification de l'existence de la cible
                     if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
                         myMapTopDix[l.cible] += 1;
@@ -155,7 +163,7 @@ void CollectionDeLog::AjouterTopDix(string nf, char triE, int heure) {
         if(file.good()){
             while(file >> l){
                 //verification du triE
-                if((triE == 'n' || (triE == 'e' && (l.Infos.type != "jpg" && l.Infos.type != "ios" ))) && l.Infos.heure == heure ) { // j'ai pas mis les extensions
+                if((triE == 'n' || (triE == 'e' && (l.Infos.type != "jpg" && l.Infos.type != "js"  && l.Infos.type != "css" ))) && l.getHeure() == heure ) { // j'ai pas mis les extensions
                     //verification de l'existence de la cible
                     if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
                         myMapTopDix[l.cible] += 1;
@@ -200,18 +208,21 @@ void CollectionDeLog::AfficherTopDix(ostream & os = cout) const {
 #endif
 
     Log l;
-    mapTopDix::const_iterator it;
+
+    vector<pair<int, string>> vectorTopDix(myMapTopDix.begin(), myMapTopDix.end());
+    sort(vectorTopDix.begin(), vectorTopDix.end());
+
     int compteur =0;
 
     cout << "Le top 10 est :" << endl;
-
+/*
     for(it = myMapTopDix.begin() ; compteur >10 ; ++it){
         cout << "page : " << it->first << " " << it->second << " hits." << endl; // a changer avec la syntaxe du tp
         compteur++;
     }
 
     cout << "fin du top 10 !" << endl;
-
+*/
 }
 
 void CollectionDeLog::EnregistrerGraph(string nfGraph) const {
