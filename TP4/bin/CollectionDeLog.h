@@ -13,6 +13,15 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
+struct dessin{
+    int compteur;
+    string cible;
+    string referent;
+    dessin(int c=0, string cible =" ", string referent = " ");
+};
+
+typedef map <string,dessin> mapGraph; //cibleref, structure inforamtions
+typedef map <string,int> mapTopDix; //cible, compteur
 
 //------------------------------------------------------------------------
 // Rôle de la classe <CollectionDeLog>
@@ -49,10 +58,8 @@ public:
     // Contrat :char e='n'
     //
 
-    CollectionDeLog(string nf, char e, char topdix = 'o', string nfGraph = "unnamed.dot");
-    //nom du fichier, e pour le tri n pour pas de tri, o si top dix n si graph, nom du fichier .dot
-    CollectionDeLog (string nf, int heure, char topdix = 'o', string nfGraph = "unnamed.dot");
-    CollectionDeLog (string nf, char e, int heure, char topdix = 'o', string nfGraph = "unnamed.dot");
+    // nom du fichier, exlusion (e ou n), heure (uint ou -1), si topdix (o ou g), nomdugraph
+    CollectionDeLog (string nf, char e = 'n', int heure = -1, char topdix = 'o', string nfGraph = "unnamed.dot");
 
     virtual ~CollectionDeLog ( );
     // Mode d'emploi :
@@ -60,40 +67,28 @@ public:
     // Contrat :
     //
 
-    static void AjouterTopDix(Log & l);
-    void AjouterGraph(Log & l);
-    void AjouterTopDixInv(Log & l);
 
-    void AjouterTopDix (string nf, char triE='n'); //n pas de tri, e on fait le tri
-    void AjouterTopDix (string nf, int heure);
-    void AjouterTopDix (string nf, char triE, int heure);
+    void RemplirMapTopDix (string nf);
 
-    void AjouterGraph (string nf, char triE);
-    void AjouterGraph (string nf, int heure);
-    void AjouterGraph (string nf, char triE, int heure);
+    void RemplirMapGraph (string nf);
 
-    void AfficherTopDix (ostream & os = cout) const;
+    void AfficherTopDix () const;
     void EnregistrerGraph (string nfGraph) const;
 
 //------------------------------------------------------------------ PRIVE
 
 
 
-public:
+private:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
 
-    typedef map <string,int> mapTopDix; //cible, compteur
-    static mapTopDix myMapTopDix;
+    bool exclusion;
+    int heure;
 
-struct dessin{
-    int compteur;
-    string cible;
-    string referent;
-};
-    typedef map <string,dessin> mapGraph; //cibleref, structure inforamtions
-    static  mapGraph myMapGraph;
+    mapTopDix myMapTopDix;
+    mapGraph myMapGraph;
 
     friend class Log;
 
