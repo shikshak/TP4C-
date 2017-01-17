@@ -6,7 +6,11 @@
 #include<string>
 #include<map>
 #include <iostream>
-#include "boost/assign.hpp"
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <set>
+
 #include "Log.h"
 
 using namespace std;
@@ -23,16 +27,6 @@ struct dessin{
 typedef map <string,dessin> mapGraph; //cibleref, structure inforamtions
 typedef map <string,int> mapTopDix; //cible, compteur
 
-enum TypeExclus
-{   js,
-    css,
-    ico,
-    ics,
-    png,
-    jpg
-};
-
-map<string, TypeExclus> exclus = {{"js", js}, {"css", css}, {"ico", ico}, {"ics", ics}, {"png", png}, {"jpg", jpg}};
 //------------------------------------------------------------------------
 // Rôle de la classe <CollectionDeLog>
 //
@@ -83,7 +77,7 @@ public:
     void RemplirMapGraph (string nf);
 
     void AfficherTopDix () const;
-    void EnregistrerGraph (string nfGraph) const;
+    void EnregistrerGraph (string nfGraph);
 
 //------------------------------------------------------------------ PRIVE
 
