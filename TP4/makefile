@@ -1,6 +1,6 @@
 # Déclaration des variables
 CC = g++
-CC_FLAGS = -Wall -std=c++0x
+CC_FLAGS = -Wall -std=c++11
 CC_EXFLAGS = # -DMAP
 VAL_FLAGS = --leak-check=yes
 
@@ -14,7 +14,7 @@ OBJECTS = $(SOURCES:$(BINDIR)/.cpp=.o)
 
 #Cible principale
 $(EXEC) : $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(EXEC)
+	$(CC) $(CC_FLAGS) $(OBJECTS) -o $(EXEC)
 	
 # Pour les fichiers objets
 %.o: %.cpp
