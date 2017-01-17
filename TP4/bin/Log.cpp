@@ -50,11 +50,11 @@ string Log::GetType()
 } //----- Fin de GetType
 
 //------------------------------------------------- Surcharge d'opérateurs
-Log & Log::operator = ( const Log & unLog )
+//Log & Log::operator = ( const Log & unLog )
 // Algorithme :
 //
-{
-} //----- Fin de operator =
+//{
+//} //----- Fin de operator =
 
 
 //-------------------------------------------- Constructeurs - destructeur
