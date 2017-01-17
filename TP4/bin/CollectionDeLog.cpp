@@ -48,18 +48,18 @@ CollectionDeLog::CollectionDeLog(string nf, char e, int h, char topdix, string n
     cout << "Appel au constructeur de <CollectionDeLog>" << endl;
 #endif
 
+    nomFichier = nf;
+    cout << nf << endl;
     if (e == 'e'){
         exclusion = true;
     }else{
         exclusion = false;
     }
-
-    if (h != -1){
-        heure = h;
-    }
+    heure = h;
 
     if (topdix == 'o'){
-        RemplirMapTopDix(nf);
+        cout <<"Top 10 !" << endl;
+        RemplirMapTopDix();
         AfficherTopDix();
     }else if (topdix == 'g'){
         RemplirMapGraph(nf);
@@ -75,24 +75,33 @@ CollectionDeLog::~CollectionDeLog() {
 #endif
 }
 
-void CollectionDeLog::RemplirMapTopDix(string nf) {
+void CollectionDeLog::RemplirMapTopDix() {
 #ifdef MAP
     cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
 #endif
 
     Log l;
 
-    ifstream file ( nf.c_str() );
+    ifstream file ( nomFichier.c_str() );
         if(file.good()){
             while(file >> l){
                 //verification
-                if( (exclusion && l.GetType() !="js") && ( heure != -1 && l.GetHeure() == heure) ) { // j'ai pas mis les extensions -> faire collection
-                    //verification de l'existence de la cible
-                    if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
-                        myMapTopDix[l.cible] += 1;
-                    } else {
-                        if(!l.cible.empty()){
-                            myMapTopDix.insert(make_pair(l.cible, 1));
+                int s = 0;
+                if(isdigit(l.Infos.status[0])) s= stoi(l.Infos.status);
+                if(s==200) {
+                    if (((exclusion && exclus.find(l.GetType()) == exclus.end()) &&
+                         (heure != -1 && l.GetHeure() == heure)) || (!exclusion && heure == -1) ||
+                        (!exclusion && heure != -1 && l.GetHeure() == heure) || (heure == -1 && (exclusion &&
+                                                                                                 exclus.find(
+                                                                                                         l.GetType()) ==
+                                                                                                 exclus.end()))) { // j'ai pas mis les extensions -> faire collection
+                        //verification de l'existence de la cible
+                        if (myMapTopDix.size() != 0 && myMapTopDix.find(l.cible) != myMapTopDix.end()) {
+                            myMapTopDix[l.cible] += 1;
+                        } else {
+                            if (!l.cible.empty()) {
+                                myMapTopDix.insert(make_pair(l.cible, 1));
+                            }
                         }
                     }
                 }
@@ -119,8 +128,7 @@ void CollectionDeLog::AfficherTopDix() const {
     setTopDix mySetTopDix;
 
     mapTopDix::const_iterator itmap;
-
-    for(auto itmap = myMapTopDix.begin(); itmap != myMapTopDix.end(); ++itmap){
+    for(itmap = myMapTopDix.begin(); itmap != myMapTopDix.end(); ++itmap){
         mySetTopDix.insert(make_pair(itmap->second, itmap->first));
     }
 
@@ -129,13 +137,14 @@ void CollectionDeLog::AfficherTopDix() const {
 
     cout << "Le top 10 est :" << endl;
 
-    for(itset = mySetTopDix.begin(); compt >10 && itset !=mySetTopDix.end(); ++itset){
-
-        cout << "page : " << itset->second << " " << itset->first << " hits." << endl; // a changer avec la syntaxe du tp
+    for(itset = mySetTopDix.end() ; compt <11 && itset !=mySetTopDix.begin(); --itset){
+        if(itset!=mySetTopDix.end()) {
+            cout << "page : " << itset->second << " " << itset->first << " hits." << endl; // a changer avec la syntaxe du tp
+        }
         compt++;
 
     }
-
+    if(compt<11) cout << "page : " << itset->second << " " << itset->first << " hits." << endl; // a changer avec la syntaxe du tp
     cout << "fin du top 10 !" << endl;
 
 }

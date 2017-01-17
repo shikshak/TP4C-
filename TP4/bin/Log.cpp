@@ -94,6 +94,7 @@ istream & operator >> (istream & is, Log & f)
     getline(is, f.Infos.logname, SEP);
     getline(is, f.Infos.name, SEP);
     getline(is, f.Infos.date, SEP);
+    getline(is, f.Infos.fuseau, SEP);
     getline(is, f.Infos.requete, SEP);
     getline(is, f.cible, SEP);
     getline(is, f.Infos.type, SEP);
@@ -105,7 +106,7 @@ istream & operator >> (istream & is, Log & f)
 }
 
 ostream & operator << (ostream & os, Log & f)
-{   os << f.Infos.ip << SEP << f.Infos.logname << SEP << f.Infos.name << SEP << f.Infos.date << SEP << f.Infos.requete << SEP << f.cible << SEP << f.Infos.status;
+{   os << f.Infos.ip << SEP << f.Infos.logname << SEP << f.Infos.name << SEP << f.Infos.date << SEP << f.Infos.fuseau << SEP << f.Infos.requete << SEP << f.cible<< SEP << f.Infos.type << SEP << f.Infos.status;
     os << SEP << f.Infos.data << SEP << f.Infos.referent << SEP << f.Infos.navigateur << endl;
     return os;
 }

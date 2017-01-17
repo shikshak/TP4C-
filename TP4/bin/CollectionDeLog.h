@@ -7,10 +7,7 @@
 #include<map>
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <algorithm>
 #include <set>
-
 #include "Log.h"
 
 using namespace std;
@@ -25,8 +22,19 @@ struct dessin{
 };
 
 typedef map <string,dessin> mapGraph; //cibleref, structure inforamtions
-typedef map <string,int> mapTopDix; //cible, compteur
+typedef map <string, int> mapTopDix; //cible, compteur
 
+enum TypeExclus
+{   js,
+    css,
+    ico,
+    ics,
+    png,
+    jpg,
+    gif
+};
+
+const map<string, TypeExclus> exclus = {{"js", js}, {"css", css}, {"ico", ico}, {"ics", ics}, {"png", png}, {"jpg", jpg}, {"gif", gif}};
 //------------------------------------------------------------------------
 // Rôle de la classe <CollectionDeLog>
 //
@@ -72,7 +80,7 @@ public:
     //
 
 
-    void RemplirMapTopDix (string nf);
+    void RemplirMapTopDix ();
 
     void RemplirMapGraph (string nf);
 
@@ -93,7 +101,7 @@ private:
 
     mapTopDix myMapTopDix;
     mapGraph myMapGraph;
-
+    string nomFichier;
     friend class Log;
 
 };

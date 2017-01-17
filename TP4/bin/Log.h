@@ -29,13 +29,14 @@ struct Informations
     string logname;
     string name;
     string date;
+    string fuseau;
     string requete;
     string type;
     string status;
     string data;
     string referent;
     string navigateur;
-    Informations(string i="", string l="", string na="", string d="", string r="",string t="",string s="", string da="", string re="", string n=""):ip(i) ,logname(l), name(na), date(d), requete(r), type(t), status(s), data(da), referent(re), navigateur(n){}
+    Informations(string i="", string l="", string na="", string d="", string f="", string r="",string t="",string s="", string da="", string re="", string n=""):ip(i) ,logname(l), name(na), date(d), fuseau(f), requete(r), type(t), status(s), data(da), referent(re), navigateur(n){}
 };
 
 
