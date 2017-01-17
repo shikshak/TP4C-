@@ -45,23 +45,34 @@ CollectionDeLog::CollectionDeLog (const CollectionDeLog & unCollectionDeLog){
 #endif
 }
 
-CollectionDeLog::CollectionDeLog(string nf, char e, char topdix, string nfGraph) {
+
+CollectionDeLog::CollectionDeLog(string nf, char e, int h, char topdix, string nfGraph) {
 #ifdef MAP
     cout << "Appel au constructeur de <CollectionDeLog>" << endl;
 #endif
+
+    if (e = 'e'){
+        exclusion = true;
+    }else{
+        exclusion = false;
+    }
+
+    if (h != -1){
+        heure = h;
+    }else{
+        heure = -1;
+    }
+
+    if (topdix ='o'){
+        RemplirMapTopDix(nf);
+        AfficherTopDix();
+    }else if (topdix = 'g'){
+        RemplirMapGraph(nf);
+        EnregistrerGraph(nfGraph);
+    }
+
 }
 
-CollectionDeLog::CollectionDeLog (string nf, int heure, char topdix, string nfGraph){
-#ifdef MAP
-    cout << "Appel au constructeur de <CollectionDeLog>" << endl;
-#endif
-}
-
-CollectionDeLog::CollectionDeLog(string nf, char e, int heure, char topdix, string nfGraph) {
-#ifdef MAP
-    cout << "Appel au constructeur de <CollectionDeLog>" << endl;
-#endif
-}
 
 CollectionDeLog::~CollectionDeLog() {
 #ifdef MAP
@@ -69,132 +80,33 @@ CollectionDeLog::~CollectionDeLog() {
 #endif
 }
 
-
-static void CollectionDeLog::AjouterTopDix(Log & l) {
-#ifdef MAP
-    cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
-#endif
-
-    if(!l.cible.empty()){
-        myMapTopDix.insert(make_pair(l.cible, 1));
-    }
-}
-
-void CollectionDeLog::AjouterGraph(Log &l) {
-#ifdef MAP
-    cout << "Appel de AjouterGraph de <CollectionDeLog>" << endl;
-#endif
-
-    if(!l.cible.empty()){
-        myMapGraph.insert(make_pair(l.cible, 1));
-    }
-}
-
-void CollectionDeLog::AjouterTopDixInv(Log & l) {
-#ifdef MAP
-    cout << "Appel de AjouterTopDixInv de <CollectionDeLog>" << endl;
-#endif
-/*
-    if(!l.cible.empty()){
-        myMapTopDixInv.insert(make_pair(l.cible, 1));
-    }
-*/
-}
-
-
-void CollectionDeLog::AjouterTopDix(string nf, char triE) {
-#ifdef MAP
-    cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
-#endif
-
-    Log l;
-    l.cible;
-    l.Infos.type;
-
-    ifstream file ( nf.c_str() ){
-        if(file.good()){
-            while(file >> l){
-                //verification du triE
-                if(triE = 'n' || (triE = 'e' && (l.Infos.type != "jpg" && l.Infos.type != "js" && l.Infos.type != "css" ))) { // rajouter toutes les extensions du tp
-                    //verification de l'existence de la cible
-                    if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
-                        myMapTopDix[l.cible] += 1;
-                    } else {
-                        AjouterTopDix(l);
-                    }
-                }
-            }
-        }
-    }
-}
-
-void CollectionDeLog::AjouterTopDix(string nf, int heure) {
+void CollectionDeLog::RemplirMapTopDix(string nf) {
 #ifdef MAP
     cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
 #endif
 
     Log l;
 
-    ifstream file ( nf.c_str() ){
+    ifstream file ( nf.c_str() );
         if(file.good()){
             while(file >> l){
                 //verification du triE
-                if(l.getHeure() == heure) {
+                if( (exclusion && l.GetType() !="js") && l.GetHeure() == heure ) { // j'ai pas mis les extensions
                     //verification de l'existence de la cible
                     if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
                         myMapTopDix[l.cible] += 1;
                     } else {
-                        AjouterTopDix(l);
+                        if(!l.cible.empty()){
+                            myMapTopDix.insert(make_pair(l.cible, 1));
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-void CollectionDeLog::AjouterTopDix(string nf, char triE, int heure) {
-#ifdef MAP
-    cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
-#endif
-
-    Log l;
-
-    ifstream file ( nf.c_str() ){
-        if(file.good()){
-            while(file >> l){
-                //verification du triE
-                if((triE == 'n' || (triE == 'e' && (l.Infos.type != "jpg" && l.Infos.type != "js"  && l.Infos.type != "css" ))) && l.getHeure() == heure ) { // j'ai pas mis les extensions
-                    //verification de l'existence de la cible
-                    if (myMapTopDix.find(l.cible) != myMapTopDix.end()) {
-                        myMapTopDix[l.cible] += 1;
-                    } else {
-                        AjouterTopDix(l);
-                    }
-                }
-            }
-        }
-    }
-}
-
-void CollectionDeLog::AjouterGraph(string nf, char triE) {
-#ifdef MAP
-    cout << "Appel de AjouterGraph de <CollectionDeLog>" << endl;
-#endif
-
-    string ciblref;
-
-
 
 }
 
-void CollectionDeLog::AjouterGraph(string nf, int heure) {
-#ifdef MAP
-    cout << "Appel de AjouterGraph de <CollectionDeLog>" << endl;
-#endif
-
-}
-
-void CollectionDeLog::AjouterGraph(string nf, char triE, int heure) {
+void CollectionDeLog::RemplirMapGraph(string nf) {
 #ifdef MAP
     cout << "Appel de AjouterGraph de <CollectionDeLog>" << endl;
 #endif
@@ -202,15 +114,21 @@ void CollectionDeLog::AjouterGraph(string nf, char triE, int heure) {
 }
 
 
-void CollectionDeLog::AfficherTopDix(ostream & os = cout) const {
+void CollectionDeLog::AfficherTopDix() const {
 #ifdef MAP
     cout << "Appel de AfficherTopDix de <CollectionDeLog>" << endl;
 #endif
 
     Log l;
 
-    vector<pair<int, string>> vectorTopDix(myMapTopDix.begin(), myMapTopDix.end());
-    sort(vectorTopDix.begin(), vectorTopDix.end());
+    vector<int, string> vectorTopDix();
+    mapGraph::const_iterator it;
+
+    for(it = myMapGraph.begin(); it != myMapGraph.end(); ++it){
+        //vector.insert();
+    }
+
+    //sort(vectorTopDix.begin(), vectorTopDix.end());
 
     int compteur =0;
 
