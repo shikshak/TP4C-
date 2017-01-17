@@ -1,6 +1,6 @@
 # Déclaration des variables
 CC = g++
-CC_FLAGS = -Wall -std=c++11
+CC_FLAGS = -std=c++11 -Wall 
 CC_EXFLAGS = # -DMAP
 VAL_FLAGS = --leak-check=yes
 
@@ -8,21 +8,24 @@ VAL_FLAGS = --leak-check=yes
 BINDIR = bin
 
 # Noms de fichiers
+LDFLAGS =
 EXEC = run
 SOURCES = $(wildcard $(BINDIR)/*.cpp)
 OBJECTS = $(SOURCES:$(BINDIR)/.cpp=.o)	
 
 #Cible principale
 $(EXEC) : $(OBJECTS)
-	$(CC) $(CC_FLAGS) $(OBJECTS) -o $(EXEC)
+	@$(CC) -o $@ $^ $(LDFLAGS) $(CC_FLAGS)
 	
 # Pour les fichiers objets
 %.o: %.cpp
-	$(CC) -c $(CC_FLAGS) $(CC_EXFLAGS) $< -o $@
+	$(CC) -o $@ -c $< $(CC_FLAGS) $(CC_EXFLAGS)
 	
 #Pour effacer les fichiers exécutables
-clean:
-	rm -f $(EXEC) $(OBJECTS)
+clean:mrproper
+	rm -rf *.o
+mrproper:
+	rm -rf $(EXEC)
 	
 #Pour effacer les fichiers .dot
 rmgraph:
