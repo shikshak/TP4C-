@@ -49,7 +49,6 @@ CollectionDeLog::CollectionDeLog(string nf, char e, int h, char topdix, string n
 #endif
 
     nomFichier = nf;
-    cout << nf << endl;
     if (e == 'e'){
         exclusion = true;
     }else{
@@ -58,11 +57,8 @@ CollectionDeLog::CollectionDeLog(string nf, char e, int h, char topdix, string n
     heure = h;
 
     if (topdix == 'o'){
-        cout <<"Top 10 !" << endl;
-        RemplirMapTopDix();
         AfficherTopDix();
     }else if (topdix == 'g'){
-        RemplirMapGraph(nf);
         EnregistrerGraph(nfGraph);
     }
 
@@ -75,11 +71,11 @@ CollectionDeLog::~CollectionDeLog() {
 #endif
 }
 
-void CollectionDeLog::RemplirMapTopDix() {
+void CollectionDeLog::RemplirMapTopDix(){
 #ifdef MAP
     cout << "Appel de AjouterTopDix de <CollectionDeLog>" << endl;
 #endif
-
+    if(heure!=-1) cout << "Warning : only hits between " << heure << "h and "<< heure+1 << "h have been taken into account" << endl;
     Log l;
 
     ifstream file ( nomFichier.c_str() );
@@ -117,11 +113,11 @@ void CollectionDeLog::RemplirMapGraph(string nf) {
 
 }
 
-void CollectionDeLog::AfficherTopDix() const {
+void CollectionDeLog::AfficherTopDix(){
 #ifdef MAP
     cout << "Appel de AfficherTopDix de <CollectionDeLog>" << endl;
 #endif
-
+    RemplirMapTopDix();
     Log l;
 
     typedef multimap <int, string> setTopDix;
@@ -135,17 +131,14 @@ void CollectionDeLog::AfficherTopDix() const {
     int compt =0;
     setTopDix::const_iterator itset;
 
-    cout << "Le top 10 est :" << endl;
-
     for(itset = mySetTopDix.end() ; compt <11 && itset !=mySetTopDix.begin(); --itset){
         if(itset!=mySetTopDix.end()) {
-            cout << "page : " << itset->second << " " << itset->first << " hits." << endl; // a changer avec la syntaxe du tp
+            cout << itset->second << " (" << itset->first << " hits)" << endl; // a changer avec la syntaxe du tp
         }
         compt++;
 
     }
-    if(compt<11) cout << "page : " << itset->second << " " << itset->first << " hits." << endl; // a changer avec la syntaxe du tp
-    cout << "fin du top 10 !" << endl;
+    if(compt<11) cout << itset->second << "  (" << itset->first << " hits)" << endl; // a changer avec la syntaxe du tp
 
 }
 
@@ -154,4 +147,7 @@ void CollectionDeLog::EnregistrerGraph(string nfGraph){
     cout << "Appel de EnregistrerGraph de <CollectionDeLog>" << endl;
 #endif
 
+    cout << "Dot-file " << nfGraph << " generated" << endl;
+    AfficherTopDix();
+    RemplirMapGraph(nfGraph);
 }

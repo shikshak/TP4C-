@@ -84,7 +84,7 @@ public:
 
     void RemplirMapGraph (string nf);
 
-    void AfficherTopDix () const;
+    void AfficherTopDix () ;
     void EnregistrerGraph (string nfGraph);
 
 //------------------------------------------------------------------ PRIVE

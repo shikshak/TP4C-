@@ -4,7 +4,5 @@
 using namespace std;
 
 int main(){
-    cout << " Hello ! Welcome in our new Log Analyse app !" << endl;
-
-    CollectionDeLog collection("anonyme.log", 'e', 10);
+    CollectionDeLog collection("anonyme.log",'e', 10, 'g', "court.dot");
 }
