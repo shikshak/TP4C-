@@ -20,6 +20,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <string>
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -34,7 +35,7 @@ struct Informations
     string data;
     string referent;
     string navigateur;
-    Informations(string i="", string l="", string na="", string d="", string r="", string t="", string s="", string da="", string re="", string n=""):ip(i) ,logname(l), name(na), date(d), requete(r), type(t), status(s), data(da), referent(re), navigateur(n){}
+    Informations(string i="", string l="", string na="", string d="", string r="",string t="",string s="", string da="", string re="", string n=""):ip(i) ,logname(l), name(na), date(d), requete(r), type(t), status(s), data(da), referent(re), navigateur(n){}
 };
 
 
@@ -44,9 +45,15 @@ class Log
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+     int GetHeure ();
     // Mode d'emploi :
+    // Retourne l'heure du log
+    // Contrat :
     //
+
+    string GetType ();
+    // Mode d'emploi :
+    // Retourne le type de fichier de la cible
     // Contrat :
     //
 

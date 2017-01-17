@@ -28,12 +28,26 @@ const char SEP = ' ';
 //-------------------------------------------------------- Fonctions amies
 
 //----------------------------------------------------- Méthodes publiques
-// type Log::Méthode ( liste de paramètres )
+int Log::GetHeure()
 // Algorithme :
 //
-//{
-//} //----- Fin de Méthode
+{   string date = Infos.date;
+    size_t pos = date.find_first_of(':');
+    string res = "";
+    res = date.substr(pos+1, 2);
+    int heure = stoi(res);
+    return heure;
+} //----- Fin de GetHeure
 
+string Log::GetType()
+// Algortihme :
+//
+{   string c = cible;
+    size_t pos = c.find_first_of('.');
+    string res;
+    res = c.substr(pos+1);
+    return res;
+} //----- Fin de GetType
 
 //------------------------------------------------- Surcharge d'opérateurs
 Log & Log::operator = ( const Log & unLog )
@@ -82,6 +96,7 @@ istream & operator >> (istream & is, Log & f)
     getline(is, f.Infos.date, SEP);
     getline(is, f.Infos.requete, SEP);
     getline(is, f.cible, SEP);
+    getline(is, f.Infos.type, SEP);
     getline(is, f.Infos.status, SEP);
     getline(is, f.Infos.data, SEP);
     getline(is, f.Infos.referent, SEP);
